@@ -132,3 +132,22 @@ def establish_connexion(key):
 
 def main():
     return True
+
+
+
+radio.on()
+radio.config(group=23)
+while True:
+    
+    if microphone.current_event() == SoundEvent.LOUD:
+        for i  in range(10) :
+            display.show(Image( '50905:'
+                            '50905:'
+                            '50905:'
+                            '00000:'
+                            '50905'))
+            sleep(400)
+            display.clear()
+            sleep(400)
+        speech.say(" BB Bruit ")
+        speaker.off
