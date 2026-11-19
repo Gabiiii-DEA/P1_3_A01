@@ -1,18 +1,23 @@
 # Imports go at the top
 from microbit import *
 import radio
+import time
 
 radio.on()
-radio.config(group=23)
+radio.config(group=1)
 menuOpen = False
-wasTouched = False
 count = 0
+amountOfMilk = 0
 
 display.show(Image.HEART)
 
 while True:
+    display.show(Image.HEART)
+
+        
+    
     if button_a.is_pressed():
-        count = 0
+        count = 1
         display.show(count)
         menuOpen = True
 
@@ -21,23 +26,25 @@ while True:
                 display.clear()
                 count -= 1
                 display.show(count)
-                sleep(1000)
+                sleep(500)
                 print(count)
             elif button_b.is_pressed():
                 display.clear()
                 count += 1
                 display.show(count)
-                sleep(1000)
+                sleep(500)
                 print(count)
             elif pin_logo.is_touched():
-                start_time = running_time()
+                start_time = time.ticks_ms()
                 while pin_logo.is_touched():
-                    if running_time() - start_time >= 2000:
+                    if time.ticks_ms() >= 2000:
                         display.clear()
-                        break
-                    sleep(1000)
+                        amountOfMilk += count
                     break
-                
+                sleep(1000)
+                display.scroll("Value :")
+                display.scroll(amountOfMilk)
+                break
         
             
                 
