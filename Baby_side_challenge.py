@@ -134,20 +134,20 @@ def main():
     return True
 
 
-
+from microbit import *
+import radio
+import music
+import speech
 radio.on()
 radio.config(group=23)
 while True:
+    microphone.set_threshold(SoundEvent.QUIET, 115)
+    microphone.set_threshold(SoundEvent.LOUD, 150)
+    if microphone.current_event() == SoundEvent.QUIET : 
+        radio.send("Test1")
+    if microphone.current_event() == SoundEvent.LOUD :
+        radio.send("Test2")
+        
     
-    if microphone.current_event() == SoundEvent.LOUD:
-        for i  in range(10) :
-            display.show(Image( '50905:'
-                            '50905:'
-                            '50905:'
-                            '00000:'
-                            '50905'))
-            sleep(400)
-            display.clear()
-            sleep(400)
-        speech.say(" BB Bruit ")
-        speaker.off
+   
+        

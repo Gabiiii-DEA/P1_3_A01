@@ -137,3 +137,26 @@ def respond_to_connexion_request(key):
     """
 
 def main():
+
+
+dodo = radio.receive()
+    if dodo == "Test1" :
+    
+        for j in range(3) :
+            speaker.on()
+            music.play(music.DADADADUM)
+            for i  in range(5) :
+                display.show(Image( '50905:'
+                            '50905:'
+                            '50905:'
+                            '00000:'
+                            '50905'))
+                sleep(400)
+                display.clear()
+                sleep(400)
+            display.show(" Agiter ")
+            speaker.off
+    if dodo == "Test2":
+        speaker.on()
+        music.play(music.BADDY)
+        display.show(" Mouvement ")
