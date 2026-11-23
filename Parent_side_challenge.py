@@ -160,3 +160,52 @@ dodo = radio.receive()
         speaker.on()
         music.play(music.BADDY)
         display.show(" Mouvement ")
+
+
+        while True:
+    if button_a.was_pressed():
+        display.scroll(compass.get_field_strength())
+    if compass.get_field_strength() < 200000:
+        display.show(Image.ANGRY)
+
+
+
+radio.on()
+radio.config(group=142)
+
+input_code = ""
+secret_key = 739
+counter = 1
+
+while True:
+
+    if button_a.is_pressed() and button_b.is_pressed():
+        if len(input_code) > 0:
+            numeric_input = int(input_code)
+            encrypted_token = (numeric_input * secret_key) + counter
+            radio.send(str(encrypted_token))
+            
+            counter += 1
+            input_code = ""
+            display.show(Image.DIAMOND_SMALL)
+            sleep(400)
+            display.clear()
+        sleep(300
+              
+    elif button_a.was_pressed():
+        input_code += "1"
+        display.set_pixel(2, 2, 9)
+        sleep(100)
+        display.clear()
+
+    elif button_b.was_pressed():
+        input_code += "2"
+        display.set_pixel(2, 2, 9)
+        sleep(100)
+        display.clear()
+
+    elif accelerometer.was_gesture("shake"):
+        input_code = ""
+        display.show(Image.NO)
+        sleep(300)
+        display.clear()
