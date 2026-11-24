@@ -2,6 +2,7 @@ from microbit import *
 import radio
 import random
 import music
+import time
 
 #Can be used to filter the communication, only the ones with the same parameters will receive messages
 #radio.config(group=23, channel=2, address=0x11111111)
@@ -9,6 +10,7 @@ import music
 
 #Initialisation des variables du micro:bit
 radio.on()
+radio.config(group=1)
 connexion_established = False
 key = "KEYWORD"
 connexion_key = None
@@ -160,6 +162,7 @@ dodo = radio.receive()
         speaker.on()
         music.play(music.BADDY)
         display.show(" Mouvement ")
+<<<<<<< HEAD
 
 
         while True:
@@ -169,9 +172,8 @@ dodo = radio.receive()
         display.show(Image.ANGRY)
 
 
-
 radio.on()
-radio.config(group=142)
+radio.config(group=1)
 
 input_code = ""
 secret_key = 739
@@ -191,18 +193,21 @@ while True:
             sleep(400)
             display.clear()
         sleep(300)
-              
+
+
     elif button_a.was_pressed():
         input_code += "1"
         display.set_pixel(2, 2, 9)
         sleep(100)
         display.clear()
 
+
     elif button_b.was_pressed():
         input_code += "2"
         display.set_pixel(2, 2, 9)
         sleep(100)
         display.clear()
+
 
     elif accelerometer.was_gesture("shake"):
         input_code = ""

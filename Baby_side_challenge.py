@@ -150,10 +150,8 @@ while True:
         
     
    
-
 radio.on()
-radio.config(group=142)
-
+radio.config(group=1)
 
 real_password = 1234
 secret_key = 739
@@ -167,25 +165,24 @@ while True:
         expected_token = str((real_password * secret_key) + counter)
         
         if message == expected_token:
-            
+        
             attempts = 0
             counter += 1
             display.show(Image.YES)
             
-
+        
             sleep(2000)
             display.clear()
         else:
-            
+        
             attempts += 1
             display.show(Image.NO)
             sleep(1000)
             display.clear()
             
-            
+        
             if attempts >= 3:
                 display.show(Image.SKULL)
                 sleep(15000)
                 attempts = 0
                 display.clear()
-        
