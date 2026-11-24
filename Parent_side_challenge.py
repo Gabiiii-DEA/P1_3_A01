@@ -266,3 +266,8 @@ def main():
                     display.scroll("Count reset")
                     resetOption = False
                     break
+
+            if pin_logo.is_touched():
+                display.clear()
+                display.scroll("Value is ")
+                display.show(amountOfMilk)
