@@ -150,4 +150,42 @@ while True:
         
     
    
+
+radio.on()
+radio.config(group=142)
+
+
+real_password = 1121
+secret_key = 739
+counter = 1
+attempts = 0
+
+while True:
+    message = radio.receive()
+    
+    if message is not None:
+        expected_token = str((real_password * secret_key) + counter)
+        
+        if message == expected_token:
+            
+            attempts = 0
+            counter += 1
+            display.show(Image.YES)
+            
+
+            sleep(2000)
+            display.clear()
+        else:
+            
+            attempts += 1
+            display.show(Image.NO)
+            sleep(1000)
+            display.clear()
+            
+            
+            if attempts >= 3:
+                display.show(Image.SKULL)
+                sleep(15000)
+                attempts = 0
+                display.clear()
         
