@@ -162,18 +162,7 @@ dodo = radio.receive()
         speaker.on()
         music.play(music.BADDY)
         display.show(" Mouvement ")
-<<<<<<< HEAD
 
-
-        while True:
-    if button_a.was_pressed():
-        display.scroll(compass.get_field_strength())
-    if compass.get_field_strength() < 200000:
-        display.show(Image.ANGRY)
-
-
-radio.on()
-radio.config(group=1)
 
 input_code = ""
 secret_key = 739
