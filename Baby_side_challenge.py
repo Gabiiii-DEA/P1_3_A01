@@ -155,7 +155,7 @@ radio.on()
 radio.config(group=142)
 
 
-real_password = 1121
+real_password = 1234
 secret_key = 739
 counter = 1
 attempts = 0

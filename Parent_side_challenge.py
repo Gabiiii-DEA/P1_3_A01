@@ -190,7 +190,7 @@ while True:
             display.show(Image.DIAMOND_SMALL)
             sleep(400)
             display.clear()
-        sleep(300
+        sleep(300)
               
     elif button_a.was_pressed():
         input_code += "1"
