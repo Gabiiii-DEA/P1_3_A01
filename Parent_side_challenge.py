@@ -140,8 +140,18 @@ def respond_to_connexion_request(key):
 
 def main():
 
+    menuOpen = False
+    resetOption = False
+    count = 0
+    amountOfMilk = 0
 
-dodo = radio.receive()
+    input_code = ""
+    secret_key = 739
+    counter = 1
+    password = False
+
+
+    dodo = radio.receive()
     if dodo == "Test1" :
     
         for j in range(3) :
@@ -180,26 +190,102 @@ while True:
             input_code = ""
             display.show(Image.DIAMOND_SMALL)
             sleep(400)
+
+  
+
+    while True:
+
+        if button_a.is_pressed() and button_b.is_pressed():
+            if len(input_code) > 0:
+                numeric_input = int(input_code)
+                encrypted_token = (numeric_input * secret_key) + counter
+                radio.send(str(encrypted_token))
+                
+                counter += 1
+                input_code = ""
+                display.show(Image.DIAMOND_SMALL)
+                sleep(400)
+                display.clear()
+            sleep(300)
+
+
+        elif button_a.was_pressed():
+            input_code += "1"
+            display.set_pixel(2, 2, 9)
+            sleep(100)
             display.clear()
-        sleep(300)
 
 
-    elif button_a.was_pressed():
-        input_code += "1"
-        display.set_pixel(2, 2, 9)
-        sleep(100)
-        display.clear()
+        elif button_b.was_pressed():
+            input_code += "2"
+            display.set_pixel(2, 2, 9)
+            sleep(100)
+            display.clear()
 
 
-    elif button_b.was_pressed():
-        input_code += "2"
-        display.set_pixel(2, 2, 9)
-        sleep(100)
-        display.clear()
+        elif accelerometer.was_gesture("shake"):
+            input_code = ""
+            display.show(Image.NO)
+            sleep(300)
+            display.clear()
 
 
-    elif accelerometer.was_gesture("shake"):
-        input_code = ""
-        display.show(Image.NO)
-        sleep(300)
-        display.clear()
+        #CODE PARTIE INTERFACE / DE ANDRADE GABRIEL    
+        while password == True:
+
+            if button_a.is_pressed() and resetOption == False:
+                display.clear()
+                count = 1
+                display.show(count)
+                menuOpen = True
+
+            while menuOpen == True:
+                if button_a.is_pressed():
+                    display.clear()
+                    count -= 1
+                    display.show(count)
+                    sleep(500)
+                    print(count)
+                        
+                elif button_b.is_pressed():
+                    display.clear()
+                    count += 1
+                    display.show(count)
+                    sleep(500)
+                    print(count)
+            
+                elif pin_logo.is_touched():
+                    start_time = time.ticks_ms()
+                    while pin_logo.is_touched():
+                        if time.ticks_ms() >= 2000:
+                            display.clear()
+                            amountOfMilk += count
+                            break
+                    sleep(1000)
+                    display.scroll("Value :")
+                    display.scroll(amountOfMilk)
+                    menuOpen = False
+                    break
+
+            if button_b.is_pressed() and menuOpen == False:
+                display.scroll("Reset?")
+                resetOption = True
+                
+            while resetOption == True:
+                if button_a.is_pressed():
+                    display.clear()
+                    display.scroll("Cancelled")
+                    resetOption = False
+                    break
+                        
+                elif button_b.is_pressed():
+                    display.clear()
+                    amountOfMilk = 0
+                    display.scroll("Count reset")
+                    resetOption = False
+                    break
+
+            if pin_logo.is_touched():
+                display.clear()
+                display.scroll("Value is ")
+                display.show(amountOfMilk)
