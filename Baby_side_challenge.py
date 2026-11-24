@@ -149,9 +149,6 @@ while True:
         radio.send("Test2")
         
     
-   
-radio.on()
-radio.config(group=1)
 
 real_password = 1234
 secret_key = 739
