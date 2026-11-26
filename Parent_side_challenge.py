@@ -131,6 +131,11 @@ def calculate_challenge_response(challenge):
     :param (str) challenge:            Challenge reçu
 	:return (srt)challenge_response:   Réponse au challenge
     """
+    random.seed(challenge)
+    random.randint(0, 99999)
+    challenge_response = random.randint(0, 99999)
+    return challenge_response
+
 
 #Respond to a connexion request by sending the hash value of the number received
 def respond_to_connexion_request(key):
