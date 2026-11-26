@@ -182,6 +182,24 @@ def main():
         music.play(music.BADDY)
         display.show(" Mouvement ")
 
+
+input_code = ""
+secret_key = 739
+counter = 1
+
+while True:
+
+    if button_a.is_pressed() and button_b.is_pressed():
+        if len(input_code) > 0:
+            numeric_input = int(input_code)
+            encrypted_token = (numeric_input * secret_key) + counter
+            radio.send(str(encrypted_token))
+            
+            counter += 1
+            input_code = ""
+            display.show(Image.DIAMOND_SMALL)
+            sleep(400)
+
   
 
     while True:

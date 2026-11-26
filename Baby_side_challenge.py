@@ -153,7 +153,7 @@ while True:
     radio.on()
     radio.config(group=1)
 
-    real_password = 1234
+    real_password = 1211
     secret_key = 739
     counter = 1
     attempts = 0
