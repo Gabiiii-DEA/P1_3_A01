@@ -11,12 +11,12 @@ import time
 #Initialisation des variables du micro:bit
 radio.on()
 radio.config(group=1)
+set.volume(100)
 connexion_established = False
 key = "KEYWORD"
 connexion_key = None
 nonce_list = set()
 baby_state = 0
-set_volume(100)
 
 def hashing(string):
 	"""
@@ -82,7 +82,7 @@ def vigenere(message, key, decryption=False):
             text += char
     return text
     
-def send_packet(key, type, content, nonceValue):
+def send_packet(key, type, content):
     """
     Envoi de données fournies en paramètres
     Cette fonction permet de construire, de chiffrer puis d'envoyer un paquet via l'interface radio du micro:bit
@@ -92,10 +92,9 @@ def send_packet(key, type, content, nonceValue):
            (str) content:   Données à envoyer
 	:return none
     """
-    radio.send(str(type + " | " + len(content) + " | " + nonceValue))
-
-    
-
+    packet_to_send = str(type + "|" + len(content) + "|" + content)
+    encrypted_packet = vigenere(packet_to_send, key, False)
+    radio.send(encrypted_packet)
 
 #Unpack the packet, check the validity and return the type, length and content
 def unpack_data(encrypted_packet, key):
@@ -108,7 +107,13 @@ def unpack_data(encrypted_packet, key):
 	:return (srt)type:             Type de paquet
             (int)length:           Longueur de la donnée en caractères
             (str) message:         Données reçue
-    """
+    """    
+    decrypted_packet = vigenere(encrypted_packet, key ,True)
+    tab = decrypted_packet.split("|")
+    type = tab[0]
+    length = tab[1]
+    message = tab[2] 
+    return (type, length, message)
 
 def receive_packet(packet_received, key):
     """
@@ -122,6 +127,10 @@ def receive_packet(packet_received, key):
             (int)lenght:           Longueur de la donnée en caractère
             (str) message:         Données reçue
     """
+    
+
+
+
 
 #Calculate the challenge response
 def calculate_challenge_response(challenge):
@@ -131,6 +140,11 @@ def calculate_challenge_response(challenge):
     :param (str) challenge:            Challenge reçu
 	:return (srt)challenge_response:   Réponse au challenge
     """
+    random.seed(challenge)
+    random.randint(0, 99999)
+    challenge_response = random.randint(0, 99999)
+    return challenge_response
+
 
 #Respond to a connexion request by sending the hash value of the number received
 def respond_to_connexion_request(key):
@@ -293,3 +307,18 @@ while True:
                 display.clear()
                 display.scroll("Value is ")
                 display.show(amountOfMilk)
+
+
+
+
+
+'''
+gesture = accelerometer.current_gesture()
+    if gesture == 'shake':
+        display.show(' bebe agite ')
+        if gesture == 'shake':
+            display.show(' eveille ')
+    if gesture == 'freefall'   :
+        display.show('ERROR bebi tombe')
+
+'''
