@@ -2,7 +2,7 @@ from microbit import *
 import radio
 import random
 import music
-
+import speech
 #Can be used to filter the communication, only the ones with the same parameters will receive messages
 #radio.config(group=23, channel=2, address=0x11111111)
 #default : channel=7 (0-83), address = 0x75626974, group = 0 (0-255)
@@ -134,12 +134,8 @@ def main():
     return True
 
 
-from microbit import *
-import radio
-import music
-import speech
 radio.on()
-radio.config(group=23)
+radio.config(group=1)
 while True:
     microphone.set_threshold(SoundEvent.QUIET, 115)
     microphone.set_threshold(SoundEvent.LOUD, 150)
@@ -169,8 +165,7 @@ while True:
                 attempts = 0
                 counter += 1
                 display.show(Image.YES)
-                
-            
+    
                 sleep(2000)
                 display.clear()
             else:
@@ -180,7 +175,6 @@ while True:
                 sleep(1000)
                 display.clear()
                 
-            
                 if attempts >= 3:
                     display.show(Image.SKULL)
                     sleep(15000)

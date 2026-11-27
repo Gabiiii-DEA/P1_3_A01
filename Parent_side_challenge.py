@@ -191,7 +191,7 @@ while True:
             radio.send(str(encrypted_token))
             
             counter += 1
-            input_code = ""
+            input_code = ""=w<w
             display.show(Image.DIAMOND_SMALL)
             sleep(400)
 
