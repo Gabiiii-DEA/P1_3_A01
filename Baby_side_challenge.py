@@ -147,36 +147,44 @@ while True:
         
     
     radio.on()
-    radio.config(group=1)
 
-    real_password = 1211
-    secret_key = 739
-    counter = 1
-    attempts = 0
+def vigenere(message, key, decryption=False):
+    text = ""
+    key_length = len(key)
+    key_as_int = [ord(k) for k in key]
 
-    while True:
-        message = radio.receive()
-        
-        if message is not None:
-            expected_token = str((real_password * secret_key) + counter)
-            
-            if message == expected_token:
-            
-                attempts = 0
-                counter += 1
-                display.show(Image.YES)
-    
-                sleep(2000)
-                display.clear()
-            else:
-            
-                attempts += 1
-                display.show(Image.NO)
-                sleep(1000)
-                display.clear()
-                
-                if attempts >= 3:
-                    display.show(Image.SKULL)
-                    sleep(15000)
-                    attempts = 0
-                    display.clear()
+    for i, char in enumerate(str(message)):
+        key_index = i % key_length
+
+        if char.isalpha():
+            if decryption:
+                modified_char = chr((ord(char.upper()) - key_as_int[key_index] + 26) % 26 + ord('A'))
+else:
+modified_char = chr((ord(char.upper()) + key_as_int[key_index] - 26) % 26 + ord('A'))
+text += modified_char
+
+elif char.isdigit():
+if decryption:
+modified_char = str((int(char) - key_as_int[key_index]) % 10)
+else:
+modified_char = str((int(char) + key_as_int[key_index]) % 10)
+text += modified_char
+
+else:
+text += char
+
+return text
+
+KEY = "KEYWORD"
+
+while True:
+if button_a.was_pressed():
+message = "HELLO123"
+
+encrypted = vigenere(message, KEY)
+
+radio.send(encrypted)
+
+print("Original :", message)
+print("Encrypted:", encrypted) 
+display.show(Image.HAPPY)
