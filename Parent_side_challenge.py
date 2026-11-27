@@ -307,3 +307,18 @@ while True:
                 display.clear()
                 display.scroll("Value is ")
                 display.show(amountOfMilk)
+
+
+
+
+
+'''
+gesture = accelerometer.current_gesture()
+    if gesture == 'shake':
+        display.show(' bebe agite ')
+        if gesture == 'shake':
+            display.show(' eveille ')
+    if gesture == 'freefall'   :
+        display.show('ERROR bebi tombe')
+
+'''
