@@ -192,60 +192,47 @@ def main():
         display.show(" Mouvement ")
 
 
-input_code = ""
-secret_key = 739
-counter = 1
+radio.on()
+
+def vigenere(message, key, decryption=False):
+    text = ""
+    key_length = len(key)
+    key_as_int = [ord(k) for k in key]
+
+    for i, char in enumerate(str(message)):
+        key_index = i % key_length
+
+        if char.isalpha():
+            if decryption:
+                modified_char = chr((ord(char.upper()) - key_as_int[key_index] + 26) % 26 + ord('A'))
+            else:
+                modified_char = chr((ord(char.upper()) + key_as_int[key_index] - 26) % 26 + ord('A'))
+            text += modified_char
+
+        elif char.isdigit():
+            if decryption:
+                modified_char = str((int(char) - key_as_int[key_index]) % 10)
+            else:
+                modified_char = str((int(char) + key_as_int[key_index]) % 10)
+            text += modified_char
+
+        else:
+            text += char
+
+    return text
+
+KEY = "KEYWORD"
 
 while True:
+    packet = radio.receive()
 
-    if button_a.is_pressed() and button_b.is_pressed():
-        if len(input_code) > 0:
-            numeric_input = int(input_code)
-            encrypted_token = (numeric_input * secret_key) + counter
-            radio.send(str(encrypted_token))
-            
-            counter += 1
-            input_code = ""=w<w
-            display.show(Image.DIAMOND_SMALL)
-            sleep(400)
+    if packet:
+        decrypted = vigenere(packet, KEY, True)
 
-  
+        print("Received :", packet)
+        print("Decrypted:", decrypted)
 
-    while True:
-
-        if button_a.is_pressed() and button_b.is_pressed():
-            if len(input_code) > 0:
-                numeric_input = int(input_code)
-                encrypted_token = (numeric_input * secret_key) + counter
-                radio.send(str(encrypted_token))
-                
-                counter += 1
-                input_code = ""
-                display.show(Image.DIAMOND_SMALL)
-                sleep(400)
-                display.clear()
-            sleep(300)
-
-
-        elif button_a.was_pressed():
-            input_code += "1"
-            display.set_pixel(2, 2, 9)
-            sleep(100)
-            display.clear()
-
-
-        elif button_b.was_pressed():
-            input_code += "2"
-            display.set_pixel(2, 2, 9)
-            sleep(100)
-            display.clear()
-
-
-        elif accelerometer.was_gesture("shake"):
-            input_code = ""
-            display.show(Image.NO)
-            sleep(300)
-            display.clear()
+        display.scroll(decrypted)
 
 
         #CODE PARTIE INTERFACE / DE ANDRADE GABRIEL    
