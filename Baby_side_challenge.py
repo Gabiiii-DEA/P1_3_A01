@@ -134,19 +134,10 @@ def main():
     return True
 
 
+from microbit import *
+import radio
+
 radio.on()
-radio.config(group=1)
-while True:
-    microphone.set_threshold(SoundEvent.QUIET, 115)
-    microphone.set_threshold(SoundEvent.LOUD, 150)
-    if microphone.current_event() == SoundEvent.QUIET : 
-        radio.send("Test1")
-    if microphone.current_event() == SoundEvent.LOUD :
-        radio.send("Test2")
-        
-        
-    
-    radio.on()
 
 def vigenere(message, key, decryption=False):
     text = ""
@@ -159,32 +150,33 @@ def vigenere(message, key, decryption=False):
         if char.isalpha():
             if decryption:
                 modified_char = chr((ord(char.upper()) - key_as_int[key_index] + 26) % 26 + ord('A'))
-else:
-modified_char = chr((ord(char.upper()) + key_as_int[key_index] - 26) % 26 + ord('A'))
-text += modified_char
+            else:
+                modified_char = chr((ord(char.upper()) + key_as_int[key_index] - 26) % 26 + ord('A'))
+            text += modified_char
 
-elif char.isdigit():
-if decryption:
-modified_char = str((int(char) - key_as_int[key_index]) % 10)
-else:
-modified_char = str((int(char) + key_as_int[key_index]) % 10)
-text += modified_char
+        elif char.isdigit():
+            if decryption:
+                modified_char = str((int(char) - key_as_int[key_index]) % 10)
+            else:
+                modified_char = str((int(char) + key_as_int[key_index]) % 10)
+            text += modified_char
 
-else:
-text += char
+        else:
+            text += char
 
-return text
+    return text
 
 KEY = "KEYWORD"
 
 while True:
-if button_a.was_pressed():
-message = "HELLO123"
+    if button_a.was_pressed():
+        message = "HELLO123"
 
-encrypted = vigenere(message, KEY)
+        encrypted = vigenere(message, KEY)
 
-radio.send(encrypted)
+        radio.send(encrypted)
 
-print("Original :", message)
-print("Encrypted:", encrypted) 
-display.show(Image.HAPPY)
+        print("Original :", message)
+        print("Encrypted:", encrypted)
+
+        display.show(Image.HAPPY)
